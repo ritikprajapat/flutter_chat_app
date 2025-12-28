@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+import '../../app/app.dart';
 
-class GlassSwitcher extends StatelessWidget {
+class TabSwitcherWidget extends StatelessWidget {
   final int selectedTab;
   final ValueChanged<int> onTabChanged;
 
-  const GlassSwitcher({super.key, required this.selectedTab, required this.onTabChanged});
+  const TabSwitcherWidget({super.key, required this.selectedTab, required this.onTabChanged});
 
   static const _height = 44.0;
   static const _animationDuration = Duration(milliseconds: 300);
@@ -38,13 +38,13 @@ class _AnimatedBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedAlign(
-      duration: GlassSwitcher._animationDuration,
+      duration: TabSwitcherWidget._animationDuration,
       curve: Curves.easeInOutCubic,
       alignment: selectedTab == 0 ? Alignment.centerLeft : Alignment.centerRight,
       child: FractionallySizedBox(
         widthFactor: 0.5,
         child: Container(
-          height: GlassSwitcher._height,
+          height: TabSwitcherWidget._height,
           margin: const EdgeInsets.all(2),
           decoration: _indicatorDecoration,
         ),
@@ -69,7 +69,7 @@ class _TabItem extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onTap(index),
         child: Container(
-          height: GlassSwitcher._height,
+          height: TabSwitcherWidget._height,
           alignment: Alignment.center,
           color: Colors.transparent,
           child: Text(

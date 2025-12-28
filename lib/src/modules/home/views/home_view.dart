@@ -1,8 +1,8 @@
-import 'package:chat_application/src/core/widgets/glass_tab_widget.dart';
+import 'package:chat_application/src/core/widgets/tab_switcher_widget.dart';
 import 'package:chat_application/src/modules/chat/views/chat_history_view.dart';
 import 'package:chat_application/src/modules/home/view_models/home_view_model.dart';
-import 'package:chat_application/src/modules/home/views/home_top_bar.dart';
-import 'package:chat_application/src/modules/home/views/user_list_view.dart';
+import 'package:chat_application/src/modules/home/widgets/home_top_bar.dart';
+import 'package:chat_application/src/modules/home/widgets/user_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeViewModel>(
-      builder: (_, vm, __) {
+      builder: (context, homeViewModel, child) {
         return Scaffold(
           backgroundColor: const Color(0xFF0A0E27),
           body: Stack(
@@ -39,16 +39,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 child: Column(
                   children: [
                     HomeTopBar(
-                      visible: vm.showAppBar,
-                      child: GlassSwitcher(selectedTab: vm.selectedTab, onTabChanged: vm.changeTab),
+                      visible: homeViewModel.showAppBar,
+                      child: TabSwitcherWidget(
+                        selectedTab: homeViewModel.selectedTab,
+                        onTabChanged: homeViewModel.changeTab,
+                      ),
                     ),
 
                     Expanded(
                       child: IndexedStack(
-                        index: vm.selectedTab,
+                        index: homeViewModel.selectedTab,
                         children: [
-                          UsersList(scrollController: vm.usersScroll),
-                          ChatHistoryList(scrollController: vm.historyScroll),
+                          UsersListWidget(scrollController: homeViewModel.usersScroll),
+                          ChatHistoryList(scrollController: homeViewModel.historyScroll),
                         ],
                       ),
                     ),
@@ -59,11 +62,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
 
           floatingActionButton: ScaleTransition(
-            scale: vm.fabController,
-            child: vm.isUsersTab
+            scale: homeViewModel.fabController,
+            child: homeViewModel.isUsersTab
                 ? GradientFab(
                     onTap: () {
-                      final name = vm.addRandomUser();
+                      final name = homeViewModel.addRandomUser();
                       SnackBarHelper.success('User $name added successfully!');
                     },
                     icon: const Icon(Icons.person_add_rounded, size: 26),
@@ -100,15 +103,14 @@ class GradientFab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            Color(0xFF6366F1), // Indigo
-            Color(0xFF8B5CF6), // Purple
-          ],
-        ),
+        gradient: const LinearGradient(colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)]),
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
-          BoxShadow(color: const Color(0xFF6366F1).withOpacity(0.55), blurRadius: 22, offset: const Offset(0, 10)),
+          BoxShadow(
+            color: const Color(0xFF6366F1).withValues(alpha: 0.55),
+            blurRadius: 22,
+            offset: const Offset(0, 10),
+          ),
         ],
       ),
       child: FloatingActionButton(onPressed: onTap, elevation: 0, backgroundColor: Colors.transparent, child: icon),

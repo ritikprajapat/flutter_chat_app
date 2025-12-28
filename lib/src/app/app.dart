@@ -1,6 +1,14 @@
-import 'package:chat_application/main.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'app.dart';
+
+export 'package:flutter/material.dart';
+export 'package:provider/provider.dart';
+export 'package:flutter/services.dart';
+
+export '../../main.dart';
+export '../app/app.dart';
+export '../core/core.dart';
+export '../data/data.dart';
+export '../modules/modules.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -8,17 +16,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => ChatProvider()),
-      ],
+      providers: AppChangeNotifierProvider.providers,
       child: MaterialApp(
+        scaffoldMessengerKey: SnackBarHelper.scaffoldMessengerKey,
         title: 'Chat App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-          useMaterial3: true,
-          scaffoldBackgroundColor: const Color(0xFF0A0E27),
           colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6366F1), brightness: Brightness.dark),
         ),
         home: const HomeScreen(),

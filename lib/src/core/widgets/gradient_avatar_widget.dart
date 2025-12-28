@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class GradientAvatar extends StatelessWidget {
+class GradientAvatarWidget extends StatelessWidget {
   final String initial;
   final bool isOnline;
   final double size;
 
-  const GradientAvatar({super.key, required this.initial, this.isOnline = false, this.size = 48});
+  const GradientAvatarWidget({super.key, required this.initial, this.isOnline = false, this.size = 48});
 
   static const _startColors = [
     Color(0xFF6366F1),

@@ -1,6 +1,5 @@
+import '../../../app/app.dart';
 import 'dart:math';
-import 'package:flutter/material.dart';
-import 'package:chat_application/src/data/models/user_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
   // UI State

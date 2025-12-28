@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import '../../app/app.dart';
 
 class TypingDot extends StatefulWidget {
   final int delay;
